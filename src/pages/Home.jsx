@@ -1,32 +1,30 @@
 import React from "react";
 import Container from "../components/Container";
-import { useNavigate } from "react-router-dom";
 
 const Home = () => {
-  const navigate = useNavigate();
 
   return (
     <Container>
-      <div class="grid md:grid-cols-2 px-10 relative gap-10 md:gap-0 md:mt-32">
+      <div className="grid md:grid-cols-2 px-10 relative gap-10 md:gap-0 md:mt-32">
         <div
-          className="flex flex-col items-start justify-center gap-3
+          className="flex flex-col items-start lg:ps-36 justify-center gap-3
       text-red-100 font-bold text-start mt-28 md:mt-0"
         >
           <p className=" drop-shadow-md  text-6xl text-primary-dark font-poppins font-medium">
-            Tsanko Yordanov's
+            Axios Setup with Cookies
           </p>
-          <p className=" drop-shadow-lg text-4xl text-secondary-light font-poppins font-light">
-            React Tailwind practice website.
+          <p className=" drop-shadow-lg text-4xl my-3 text-secondary-light font-poppins font-light">
+            Developed by Tsanko Yordanov
           </p>
           <button
             className="bg-primary-dark drop-shadow-md text-white text-lg tracking-wide
          px-10 py-2 rounded-lg hover:bg-primary transition hover:scale-105 font-poppins"
             onClick={(e) => {
               e.preventDefault();
-              return navigate("/dashboard");
+              window.open("https://github.com/YordanovTsanko/React-Tailwind-App", "_blank");
             }}
           >
-            Explore
+            See on GitHub
           </button>
         </div>
         <div className="flex items-center justify-center ">

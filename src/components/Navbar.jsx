@@ -29,7 +29,7 @@ const Navbar = ({ loading, loggedIn }) => {
   return (
     <nav className="bg-primary p-4 flex justify-between items-center fixed w-full z-50">
       <a href="/" className="text-white text-xl font-bold font-poppins">
-        React Tailwind Practice
+      Advanced Tutorial
       </a>
 
       {!isLoginPage && (

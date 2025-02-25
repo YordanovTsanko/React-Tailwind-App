@@ -1,8 +1,15 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import Container from "../../components/Container";
+import { useDispatch, useSelector } from "react-redux";
+import { registerUser } from "../../redux/authSlicer"; 
 
-const Register = ({ loggedIn, loading }) => {
+const Register = () => {
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+  
+  const { status, error } = useSelector((state) => state.auth);
+  
   const [formData, setFormData] = useState({
     email: "",
     password: "",
@@ -17,19 +24,25 @@ const Register = ({ loggedIn, loading }) => {
     }));
   };
 
-  const navigate = useNavigate();
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    if (formData.password !== formData.confirmPassword) {
+      console.log("Passwords do not match");
+      return;
+    }
+    try {
+      await dispatch(registerUser(formData)).unwrap();
+      navigate("/dashboard");
+    } catch (error) {
+      console.error("Registration failed:", error);
+    }
+  };
 
   useEffect(() => {
-    if (!loading && loggedIn === "true") {
-      navigate("/dashboard");
+    if (error) {
+      console.log(error);
     }
-  }, [loggedIn, loading, navigate]);
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    // Handle form submission here
-    console.log(formData);
-  };
+  }, [error]);
 
   return (
     <Container>
@@ -59,7 +72,7 @@ const Register = ({ loggedIn, loading }) => {
               />
             </div>
 
-            <div className="mb-6">
+            <div className="mb-4">
               <label
                 htmlFor="password"
                 className="block text-lg font-medium text-gray-700"
@@ -100,14 +113,22 @@ const Register = ({ loggedIn, loading }) => {
             <button
               type="submit"
               className="w-full py-3 bg-primary text-white rounded-lg font-semibold hover:bg-purple-700 transition-colors duration-200"
+              disabled={status === "loading"}
             >
-              Create Account
+              {status === "loading" ? "Loading..." : "Register"}
             </button>
+
+            {status === "failed" && (
+              <p className="mt-4 text-center text-red-500">{error}</p>
+            )}
 
             <p className="mt-4 text-center text-gray-600">
               Already have an account?{" "}
-              <Link to="/login" className="text-primary hover:text-purple-700">
-                Sign In
+              <Link
+                to="/login"
+                className="text-primary hover:text-purple-700"
+              >
+                Login
               </Link>
             </p>
           </form>
