@@ -18,7 +18,6 @@ const Register = () => {
     }
   }, [error]);
 
-  // Validation Schema with Yup
   const validationSchema = Yup.object({
     username: Yup.string()
       .min(4, "Username must be at least 4 characters")
@@ -36,7 +35,6 @@ const Register = () => {
       .required("Confirm password is required"),
   });
 
-  // Form submission handler
   const handleSubmit = async (values) => {
     try {
       if(values.password !== values.confirmPassword) console.log("Passwords do not match")
@@ -68,7 +66,6 @@ const Register = () => {
           >
             {({ isSubmitting }) => (
               <Form>
-                {/* Username Field */}
                 <div className="mb-4">
                   <label
                     htmlFor="username"
@@ -90,7 +87,6 @@ const Register = () => {
                   />
                 </div>
 
-                {/* Password Field */}
                 <div className="mb-4">
                   <label
                     htmlFor="password"
@@ -112,7 +108,6 @@ const Register = () => {
                   />
                 </div>
 
-                {/* Confirm Password Field */}
                 <div className="mb-6">
                   <label
                     htmlFor="confirmPassword"
@@ -134,7 +129,6 @@ const Register = () => {
                   />
                 </div>
 
-                {/* Submit Button */}
                 <button
                   type="submit"
                   className="w-full py-3 bg-primary text-white rounded-lg font-semibold hover:bg-purple-700 transition-colors duration-200"

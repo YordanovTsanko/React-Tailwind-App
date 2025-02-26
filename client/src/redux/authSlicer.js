@@ -13,14 +13,11 @@ const initialState = {
 export const registerUser = createAsyncThunk(
   "auth/registerUser",
   async (formData, { rejectWithValue }) => {
-
-    console.log(formData);
-
     try {
       const response = await axiosInstance.post("/auth/register", formData);
       return response.data;
     } catch (error) {
-      return rejectWithValue(error.response?.data?.message || error.message);
+      return rejectWithValue(error.response?.data?.error || "Invalid Credentials");
     }
   }
 );
@@ -32,7 +29,20 @@ export const loginUser = createAsyncThunk(
       const response = await axiosInstance.post("/auth/login", formData);
       return response.data;
     } catch (error) {
-      return rejectWithValue(error.response?.data?.message || error.message);
+      return rejectWithValue(error.response?.data?.error || "Invalid Credentials");
+    }
+  }
+);
+
+export const getUser = createAsyncThunk(
+  "auth/getUser",
+  async (_, { rejectWithValue }) => {
+    try {
+      const response = await axiosInstance.get("/auth/user");
+      return response.data;
+    } catch (error) {
+      console.log(error);
+      return rejectWithValue(error.response?.data?.error || "Error fetching user");
     }
   }
 );
@@ -57,7 +67,6 @@ const authSlice = createSlice({
         state.error = null;
       })
       .addCase(loginUser.fulfilled, (state, action) => {
-        state.user = action.payload.user;
         state.token = action.payload.token;
         state.isAuthenticated = true;
         state.status = "succeeded";
@@ -80,6 +89,19 @@ const authSlice = createSlice({
         state.isAuthenticated = true;
       })
       .addCase(registerUser.rejected, (state, action) => {
+        state.status = "failed";
+        state.error = action.payload;
+      })
+      .addCase(getUser.pending, (state) => {
+        state.status = "loading";
+      })
+      .addCase(getUser.fulfilled, (state, action) => {
+        state.user = action.payload;
+        state.isAuthenticated = true;
+        state.token = Cookies.get("token");
+        state.status = "succeeded";
+      })
+      .addCase(getUser.rejected, (state, action) => {
         state.status = "failed";
         state.error = action.payload;
       });

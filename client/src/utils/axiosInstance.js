@@ -4,7 +4,7 @@ import store from "../redux/store";
 import { logout } from "../redux/authSlicer";
 
 const axiosInstance = axios.create({
-  baseURL: "/api",
+  baseURL: "http://localhost:5000/api",
   timeout: 5000,
   headers: {
     "Content-Type": "application/json",
@@ -24,7 +24,6 @@ axiosInstance.interceptors.request.use(
 
 axiosInstance.interceptors.response.use(
   (response) => {
-    console.log(response); //delete on production
     return response;
   },
   (error) => {
