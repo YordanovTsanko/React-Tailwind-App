@@ -10,6 +10,8 @@ import Home from "./pages/Home";
 import Navbar from "./components/Navbar";
 import Login from "./pages/auth/Login";
 import Register from "./pages/auth/Register";
+import ForgotPassword from "./pages/auth/ForgotPassword";
+import Success from "./pages/auth/Success";
 import Dashboard from "./pages/Dashboard";
 import ProtectedRoute from "./components/ProtectedRoute";
 
@@ -36,6 +38,8 @@ function MainContent() {
           <Route path="/" element={<Home />} />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
+          <Route path="/forgot-password" element={<ForgotPassword />} />
+          <Route path="/success" element={<Success />} />
           <Route
             path="/dashboard/*"
             element={
