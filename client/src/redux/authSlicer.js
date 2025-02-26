@@ -1,7 +1,6 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import Cookies from "js-cookie";
 import axiosInstance from "../utils/axiosInstance";
-import axios from "axios";
 
 const initialState = {
   user: null,
@@ -14,8 +13,11 @@ const initialState = {
 export const registerUser = createAsyncThunk(
   "auth/registerUser",
   async (formData, { rejectWithValue }) => {
+
+    console.log(formData);
+
     try {
-      const response = await axios.post("/auth/register", formData);
+      const response = await axiosInstance.post("/auth/register", formData);
       return response.data;
     } catch (error) {
       return rejectWithValue(error.response?.data?.message || error.message);

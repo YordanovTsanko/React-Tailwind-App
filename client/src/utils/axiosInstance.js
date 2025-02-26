@@ -4,7 +4,7 @@ import store from "../redux/store";
 import { logout } from "../redux/authSlicer";
 
 const axiosInstance = axios.create({
-  baseURL: "https://api.example.com", // Replace with API URL
+  baseURL: "/api",
   timeout: 5000,
   headers: {
     "Content-Type": "application/json",

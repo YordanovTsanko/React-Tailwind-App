@@ -1,7 +1,22 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Container from "../components/Container";
+import axiosInstance from "../utils/axiosInstance";
+import axios from "axios";
 
 const Home = () => {
+  useEffect(() => {
+    const checkServer = async () => {
+      try {
+        const response = await axios.get("/");
+        console.log(response);
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+    };
+    checkServer();
+
+  }, []); 
+
 
   return (
     <Container>
@@ -21,7 +36,10 @@ const Home = () => {
          px-10 py-2 rounded-lg hover:bg-primary transition hover:scale-105 font-poppins"
             onClick={(e) => {
               e.preventDefault();
-              window.open("https://github.com/YordanovTsanko/React-Tailwind-App", "_blank");
+              window.open(
+                "https://github.com/YordanovTsanko/React-Tailwind-App",
+                "_blank"
+              );
             }}
           >
             See on GitHub
